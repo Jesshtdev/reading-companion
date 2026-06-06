@@ -7,7 +7,7 @@ import TabNavigator from './TabNavigator';
 const Stack = createNativeStackNavigator();
 
 export default function RootNavigator() {
-    const isLoggedIn = false; // Simulación de estado de autenticación  
+    const isLoggedIn = true; // Simulación de estado de autenticación  
     return (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{headerShown: false}}>

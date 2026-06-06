@@ -3,6 +3,7 @@ import {
   View, Text, StyleSheet, Image, TextInput,
   ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity
 } from 'react-native'
+import { Link } from '@react-navigation/native';
 
 export default function LoginScreen() {
   return (
@@ -26,6 +27,7 @@ export default function LoginScreen() {
         <View style={styles.formCard}>
           <Text>Inicia sesión</Text>
           <ScrollView>
+            
             <TextInput
               style={styles.textinput}
               placeholder='Correo'
@@ -39,7 +41,9 @@ export default function LoginScreen() {
             </TextInput>
 
             <TouchableOpacity style={styles.touchablebutton}>
-              <Text>Entrar</Text>
+              <Link screen={'Home'}>
+              <Text style={styles.footerText}>Entrar</Text>
+              </Link>
             </TouchableOpacity>
           </ScrollView>
         </View>
@@ -47,8 +51,15 @@ export default function LoginScreen() {
 
       <View style={styles.FooterContainer}>
         <Text style={styles.footerText}>
-          ¿No tienes cuenta? Regístrate
+          ¿No tienes cuenta?
         </Text>
+        <TouchableOpacity>
+          <Link screen={'Register'}>
+            <Text style={styles.footerText}>
+              Registrate
+            </Text>
+          </Link>
+        </TouchableOpacity>   
       </View>
 
     </KeyboardAvoidingView>
@@ -99,7 +110,7 @@ const styles = StyleSheet.create({
   footerText: {
     color: '#FFFFFF',
     fontSize: 15,
-    marginBottom: 30
+    marginBottom: 5
   },
 
   textinput: {
@@ -115,7 +126,7 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     marginTop: 20,
-    backgroundColor: '#01639c6c',
+    backgroundColor: '#033e91b2',
     padding: 10,
     borderRadius: 15
   }
