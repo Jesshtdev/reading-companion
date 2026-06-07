@@ -5,13 +5,20 @@ import { Link } from '@react-navigation/native';
 
 
 export default function HomeScreen() {
+  const hasActiveBook = true; //En caso de no haber libros activos
   return (
     <View style={styles.HomeScreen}>
       <View style={styles.HeaderContainer}>
         <View style={styles.headerTop}>
           <View>
             <Text style={styles.greeting}>¡Hola, user! ✌️</Text>
-            <Text style={styles.subtitle}>¿Qué historia leeremos hoy?</Text>
+            {hasActiveBook ?
+              (
+                <Text style={styles.subtitle}>Continúa tu aventura</Text>
+              ) : (
+                <Text style={styles.subtitle}>¿Qué historia leeremos hoy?</Text>
+              )}
+
           </View>
 
           <Ionicons
@@ -38,37 +45,101 @@ export default function HomeScreen() {
 
 
       <View style={styles.BodyContainer}>
-        <ScrollView contentContainerStyle={{ padding: 10 }}>
-          <View style={styles.contentCard}>
-            <Image
-              style={styles.ImageLibros}
-              source={require("../../assets/sinLibros.png")}
-            />
-            <Text style={styles.txtTitle}>¿Listo para leer?</Text>
-            <Text style={styles.txtSubtitle}>Comienza una nueva aventura junto con tus amigos</Text>
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          {hasActiveBook ? (
+            <>
+            { /* Lectura actual*/}
+              <Text style={styles.textTitle}>Tu lectura actual</Text>
+              <View style={styles.contentCard}>
+                <View style={styles.bookContent}>
+                  <View style={styles.bookCoverSection}>
+                    <Image
+                      style={styles.imageBookCover}
+                      source={require("../../assets/L001.jpg")}
+                    />
+                  </View>
+                  <View style={styles.bookInfoSection}>
+                    <Text style={styles.textNameBook}>El principito</Text>
+                    <Text style={styles.textAutor}>Antoine de Saint-Exupéry </Text>
 
+                    <Text style={styles.textReadingProgress}>45% leido</Text>
+                    <View style={styles.progressBar}>
+                      <View style={styles.progressFill} />
+                    </View>
 
-            <TouchableOpacity style={styles.ButtonIrA}>
-              <Text style={styles.textButton}>Ir a biblioteca</Text>
-            </TouchableOpacity>
+                    <View style={styles.bookStatusSection}>
+                      <Ionicons
+                        name="calendar-outline"
+                        size={20}
+                        color="#9b9b9b"
+                      />
+                      <Text style={styles.textStatusReader}>Ultima lectura: hoy</Text>
+                    </View>
+                  </View>
+                </View>
 
-          </View>
+                <TouchableOpacity style={styles.ButtonIrA}>
+                  <Text style={styles.textContinue}>Continuar leyendo</Text>
+                </TouchableOpacity>
+              </View>
 
-          <View style={styles.ActivityContainer}>
+              { /* Lectura compartida*/}
+              <Text style={styles.textTitle}>Lectura compartida</Text>
+              <View style={styles.contentCard}>
+                <View style={styles.friendContent}>
+
+                  <View style={styles.AvatarImagenSection}>
+                    <Image
+                      style={styles.imageAvatar}
+                      source={require("../../assets/Avatar001.png")}
+                    />
+                  </View>
+
+                  <View style={styles.AvatarInfoSection}>
+                    <Text style={styles.textNameBook}>Emi</Text>
+
+                    <Text style={styles.textReadingProgress}>
+                      65% leído
+                    </Text>
+
+                    <View style={styles.progressBar}>
+                      <View style={styles.progressFillFriend} />
+                    </View>
+
+                    <Text style={styles.friendStatus}>
+                      Va delante de ti 😄
+                    </Text>
+                  </View>
+
+                </View>
+              </View>
+
+            </>
+          ) : (
+            <View style={styles.contentCard}>
+              <Image
+                style={styles.ImageLibros}
+                source={require("../../assets/sinLibros.png")}
+              />
+              <Text style={styles.txtTitle}>¿Listo para leer?</Text>
+              <Text style={styles.txtSubtitle}>Comienza una nueva aventura junto con tus amigos</Text>
+
+              <TouchableOpacity style={styles.ButtonIrA}>
+                <Text style={styles.textButton}>Ir a biblioteca</Text>
+              </TouchableOpacity>
+
+            </View>
+          )}
+
+         <View style={styles.ActivityContainer}>
             <Text>Actividad reciente</Text>
             <Text>Ver todo</Text>
           </View>
 
           <View style={styles.contentCard}>
-            
           </View>
         </ScrollView>
       </View>
-
-
-
-
-
     </View>
 
   )
@@ -88,6 +159,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     paddingBottom: 18,
     justifyContent: 'flex-start',
+  },
+
+  scrollContent: {
+    paddingHorizontal: 15,
+    paddingBottom: 20,
   },
 
   headerTop: {
@@ -127,9 +203,7 @@ const styles = StyleSheet.create({
 
   BodyContainer: {
     flex: 4,
-    marginTop: 20,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
+    width: '100%',
   },
 
   contentCard: {
@@ -175,12 +249,116 @@ const styles = StyleSheet.create({
     fontSize: 18
   },
 
+  textContinue: {
+    color: '#FFFFFF',
+    fontSize: 15
+  },
+
   ActivityContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 10
-  }
+  },
 
+  imageBookCover: {
+    width: 110,
+    height: 160,
+    borderRadius: 8,
+  },
 
+  bookContent: {
+    flexDirection: 'row',
+    alignItems: 'flex-start'
+  },
+
+  bookCoverSection: {
+    marginRight: 18
+  },
+
+  bookInfoSection: {
+    flex: 1,
+    flexShrink: 1,
+  },
+
+  buttonSection: {
+    marginTop: 5
+  },
+
+  textTitle: {
+    marginBottom: 10,
+    marginTop: 5,
+    fontWeight: 'bold',
+    fontSize: 15
+  },
+
+  textNameBook: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#1F2937',
+    marginBottom: 4,
+  },
+
+  textAutor: {
+    fontSize: 14,
+    color: '#6B7280',
+    marginBottom: 22,
+  },
+
+  textReadingProgress: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#1F2937',
+    marginBottom: 8,
+  },
+
+  bookStatusSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 18,
+  },
+
+  textStatusReader: {
+    fontSize: 14,
+    color: '#6B7280',
+    marginLeft: 6,
+  },
+
+  progressBar: {
+    width: '100%',
+    height: 6,
+    backgroundColor: '#E5E7EB',
+    borderRadius: 10,
+  },
+
+  progressFill: {
+    width: '45%',
+    height: '100%',
+    backgroundColor: '#033F91',
+    borderRadius: 10,
+  },
+
+  progressFillFriend: {
+    width: '65%',
+    height: '100%',
+    backgroundColor: '#033F91',
+    borderRadius: 10,
+  },
+
+  imageAvatar: {
+    width: 60,
+    height: 60,
+    borderRadius: 30
+  },
+
+  AvatarInfoSection: {
+    flex: 1,
+    marginRight: 18
+  },
+
+  friendContent: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
 });
